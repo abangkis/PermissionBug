@@ -1,14 +1,19 @@
 package net.mreunionlabs.permissionbug
 
-import android.support.v7.app.AppCompatActivity
+import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Bundle
-
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -21,6 +26,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
+
+    private var fusedLocationClient: FusedLocationProviderClient? = null
 
     /**
      * Manipulates the map once available.
@@ -38,5 +45,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        getLastLocation()
+    }
+
+    @SuppressLint("MissingPermission")
+    fun getLastLocation() = runWithPermissions(Manifest.permission.ACCESS_COARSE_LOCATION) {
+        val locationClient = fusedLocationClient
+        locationClient?.lastLocation?.addOnSuccessListener {
+            // Got last known location. In some rare situations this can be null.
+            Log.d("TAG", "last location $it")
+        }
     }
 }
