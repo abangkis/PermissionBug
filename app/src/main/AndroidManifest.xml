@@ -10,18 +10,19 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
-            android:allowBackup="true"
+            android:name="net.mreunionlabs.permissionbug.MyApplication"
+            android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
         <activity
-                android:name=".MapsActivity"
+                android:name=".ui.MapsActivity"
                 android:label="@string/title_activity_maps">
         </activity>
 
-        <activity android:name=".MapTabActivity">
+        <activity android:name=".ui.MapTabActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

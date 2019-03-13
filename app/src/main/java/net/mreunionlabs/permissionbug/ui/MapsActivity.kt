@@ -1,4 +1,4 @@
-package net.mreunionlabs.permissionbug
+package net.mreunionlabs.permissionbug.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -14,6 +14,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import net.mreunionlabs.permissionbug.R
+import timber.log.Timber
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -55,7 +57,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val locationClient = fusedLocationClient
         locationClient?.lastLocation?.addOnSuccessListener {
             // Got last known location. In some rare situations this can be null.
-            Log.d("TAG", "last location $it")
+            Timber.d("last location $it")
         }
     }
 }

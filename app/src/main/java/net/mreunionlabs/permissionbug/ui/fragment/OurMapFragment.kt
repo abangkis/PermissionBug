@@ -1,23 +1,22 @@
-package net.mreunionlabs.permissionbug
+package net.mreunionlabs.permissionbug.ui.fragment
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import net.mreunionlabs.permissionbug.R
+import timber.log.Timber
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,8 +35,6 @@ private const val ARG_PARAM2 = "param2"
  */
 class OurMapFragment : Fragment(), OnMapReadyCallback {
     companion object {
-        private val TAG = "OurMapFragment"
-
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
@@ -90,23 +87,24 @@ class OurMapFragment : Fragment(), OnMapReadyCallback {
 
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity as Context)
-        getLastLocation()
+        // fixme uncomment getLastLocation to reproduce the bug
+//        getLastLocation()
 //        childFragmentManager.executePendingTransactions()
     }
 
     @SuppressLint("MissingPermission")
     fun getLastLocation() = runWithPermissions(Manifest.permission.ACCESS_COARSE_LOCATION) {
-        Log.d(TAG, "GET LAST LOCATION")
+        Timber.d("GET LAST LOCATION")
         val locationClient = fusedLocationClient
         locationClient?.lastLocation?.addOnSuccessListener {
             // Got last known location. In some rare situations this can be null.
-            Log.d("TAG", "last location $it")
+            Timber.d("last location $it")
         }
     }
 
     override fun onMapReady(gMap: GoogleMap) {
         //        gMap.setMyLocationEnabled(true); fixme enable my location. Use fragment in regular map activity
-        Log.d("TAG", "onMapReady")
+        Timber.d("onMapReady")
 //        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(KomuttaLocationUtil.JAKARTA_BOUNDS.center, vm.getZoom().toFloat()))
     }
 

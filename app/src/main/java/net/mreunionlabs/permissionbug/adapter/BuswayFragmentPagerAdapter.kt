@@ -12,7 +12,7 @@ class BuswayFragmentPagerAdapter(
 ) :
     FragmentStatePagerAdapter(fm) {
     //    private int[] tabTitles = new int[]{ R.string.trans, R.string.feeder, R.string.trans_jabodetabek, R.string.news, R.string.info, R.string.tcares, R.string.map};
-    private val tabTitles = arrayOf("map")
+    private val tabTitles = arrayOf("map", "bw map")
 
     override fun getCount(): Int {
         return fragments.size
